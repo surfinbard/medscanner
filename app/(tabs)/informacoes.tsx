@@ -31,8 +31,6 @@ const X = ({ color, size }: { color: string; size: number }) => (
 );
 
 export default function MedScanner() {
-  const [firstMedName, setFirstMedName] = useState<string>("");
-  const [secondMedName, setSecondMedName] = useState<string>("");
   const [medicationName, setMedicationName] = useState<string>("");
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
@@ -79,7 +77,7 @@ export default function MedScanner() {
           <View style={styles.header}>
             <Text style={styles.title}>MedScanner</Text>
             <Text style={styles.subtitle}>
-              Consulte interações entre medicamentos
+              Consulte informações sobre medicamentos
             </Text>
           </View>
 
@@ -87,17 +85,9 @@ export default function MedScanner() {
           <View style={styles.formContainer}>
             <TextInput
               style={styles.input}
-              placeholder="Medicamento 1"
+              placeholder="Nome do Medicamento"
               placeholderTextColor="#9CA3AF"
-              value={firstMedName}
-              onChangeText={setMedicationName}
-              editable={!isLoading}
-            />
-            <TextInput
-              style={styles.input}
-              placeholder="Medicamento 2"
-              placeholderTextColor="#9CA3AF"
-              value={secondMedName}
+              value={medicationName}
               onChangeText={setMedicationName}
               editable={!isLoading}
             />
@@ -106,7 +96,7 @@ export default function MedScanner() {
               <TouchableOpacity
                 style={[styles.button, isLoading && styles.buttonDisabled]}
                 onPress={handleSubmit}
-                disabled={firstMedName.length > 0 && secondMedName.length > 0}
+                disabled={isLoading}
                 activeOpacity={0.8}
               >
                 {isLoading ? (
@@ -245,7 +235,6 @@ const styles = StyleSheet.create({
   },
   formContainer: {
     marginBottom: 32,
-    rowGap: 8,
   },
   input: {
     width: "100%",
