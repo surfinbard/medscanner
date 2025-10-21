@@ -1,3 +1,4 @@
+import MedicationDropdown from "@/components/ui/medication-dropdown";
 import { Medicamento } from "@/interfaces/Medicamento";
 import React, { useState } from "react";
 import {
@@ -8,7 +9,6 @@ import {
   StatusBar,
   StyleSheet,
   Text,
-  TextInput,
   TouchableOpacity,
   View,
 } from "react-native";
@@ -37,6 +37,7 @@ export default function MedScanner() {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [modalVisible, setModalVisible] = useState<boolean>(false);
   const [resultData, setResultData] = useState<Medicamento>();
+  const disabled = firstMedName.length == 0 || secondMedName.length == 0;
 
   const handleSubmit = () => {
     if (!medicationName.trim()) return;
@@ -85,14 +86,22 @@ export default function MedScanner() {
 
           {/* Form */}
           <View style={styles.formContainer}>
-            <TextInput
+            {/* <TextInput
               style={styles.input}
               placeholder="Medicamento 1"
               placeholderTextColor="#9CA3AF"
               value={firstMedName}
               onChangeText={setMedicationName}
               editable={!isLoading}
+            /> */}
+            <MedicationDropdown
+              placeholder="Medicamento 1"
+              firstMedName={firstMedName}
+              setMedicationName={setMedicationName}
+              isLoading={isLoading}
             />
+            {/* 
+
             <TextInput
               style={styles.input}
               placeholder="Medicamento 2"
@@ -100,13 +109,19 @@ export default function MedScanner() {
               value={secondMedName}
               onChangeText={setMedicationName}
               editable={!isLoading}
-            />
+            /> */}
 
+            <MedicationDropdown
+              placeholder="Medicamento 2"
+              firstMedName={firstMedName}
+              setMedicationName={setMedicationName}
+              isLoading={isLoading}
+            />
             <View style={styles.buttonContainer}>
               <TouchableOpacity
-                style={[styles.button, isLoading && styles.buttonDisabled]}
+                style={[styles.button, disabled && styles.buttonDisabled]}
                 onPress={handleSubmit}
-                disabled={firstMedName.length > 0 && secondMedName.length > 0}
+                disabled={disabled}
                 activeOpacity={0.8}
               >
                 {isLoading ? (
@@ -273,7 +288,7 @@ const styles = StyleSheet.create({
     elevation: 4,
   },
   buttonDisabled: {
-    opacity: 0.7,
+    opacity: 0.3,
   },
   buttonText: {
     color: "#FAFAFA",

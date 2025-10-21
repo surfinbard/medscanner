@@ -1,4 +1,4 @@
-export const nameList: string[] = [
+export const medList: string[] = [
   "FOR GAS",
   "NITRATO DE MICONAZOL",
   "DESTYC",
